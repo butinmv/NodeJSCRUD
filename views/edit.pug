@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    .container
+        .row
+            .col-lg-8.col-md-8
+                table.table.table-border.table-hover
+                    thead.thread-light
+                        tr
+                            th Name
+                            th Sirname
+                            th Email
+                            th Actions
+                    tbody#listStaff
+                        each staff in staffs
+                            tr
+                                td=staff.name
+                                td=staff.sirname
+                                td=staff.email
+                                td
+                                    a.btn.btn-outline-info(role="button", href='/edit/' + staff.id) Edit
+                                    a.ml-2.btn.btn-outline-warning(role="button" href='delete/' + staff.id) Delete
+            .col-lg-4.col-md-4
+                h1 Staff
+                form(method='POST' action='/' id='addStaff')
+                    input#name.form-control(type='text', placeholder='Name' name='name')
+                    input#sirname.form-control(type='text', placeholder='Sirname' name='sirname')
+                    input#email.form-control(type='text', placeholder='Email' name='email')
+                    input#password.form-control(type='password', placeholder='Password' name='password')
+
+                    input.btn.btn-success(type='submit', name='addStaff' value='Add')
+                    //a.btn.btn-info(href='updateStaff/' + staff.id, type='submit', name='updateStaff' value='Update')
+

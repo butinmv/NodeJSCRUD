@@ -1,0 +1,9 @@
+tbody
+    -for (let i = 0; i < staffs.length; i++)
+    +rowsTable(
+        staffs[i].dataValues.id,
+        staffs[i].dataValues.name,
+        staffs[i].dataValues.sirname,
+        staffs[i].dataValues.email,
+        staffs[i].dataValues.password
+    )
