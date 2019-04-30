@@ -11,24 +11,14 @@ router.get(['/', '/index'], async function (req, res, next) {
     res.render('index', {title: 'Staffs', staffs: staffs});
 });
 
-
-// // CREATE
-// router.post(['/', '/index'], async function (req, res, next) {
-//     await db.Staff.create({
-//         name: req.body.name,
-//         sirname: req.body.sirname,
-//         email: req.body.email,
-//         password: req.body.password,
-//     })
-//     res.redirect('/index')
-// });
+// CREATE
 router.post(['/', '/index'], async function (req, res, next) {
     await db.Staff.create({
         name: req.body.name,
         sirname: req.body.sirname,
         email: req.body.email,
         password: req.body.password,
-    })
+    });
     let staffs = await db.Staff.findAll();
     res.render('tableajax', {staffs: staffs})
 });
@@ -45,45 +35,15 @@ router.get('/delete/:id', function (req, res, next) {
 });
 
 // EDIT
-// router.get('/edit/:id', async function (req, res, next) {
-//     let editStaff = await db.Staff.findOne({
-//         where: {
-//             id: req.params.id
-//         },
-//         raw: true
-//     });
-//     console.log(editStaff);
-//     let staffs = await db.Staff.findAll();
-//     res.redirect('/');
-// });
-
-//
-// router.post('/edit/:id',async function (req, res, next) {
-//     let editStaff = await db.Staff.update({
-//         name: req.body.name,
-//         sirname: req.body.sirname,
-//         email: req.body.email,
-//         password: req.body.password
-//     }, { where: {id: req.params.id}});
-//     res.redirect('/');
-// });
-//
-
-
-router.use('/edit/', async function (req, res) {
-    var id = parseInt(req.body.id)
-    await db.Staff.update({
-            name: req.body.name,
-            sirname: req.body.sirname,
-            email: req.body.email,
-            password: req.body.password
-        },
-        {
-            where: {
-                id: id
-            }
-        })
-    res.redirect('/')
-})
+router.post('/edit', async function (req, res, next) {
+    let editStaff = await db.Staff.update({
+        name: req.body.name,
+        sirname: req.body.sirname,
+        email: req.body.email,
+        password: req.body.password
+    }, {where: {id: req.body.id}});
+    let staffs = await db.Staff.findAll();
+    res.render('tableajax', {staffs: staffs})
+});
 
 module.exports = router;

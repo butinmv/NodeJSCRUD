@@ -1,8 +1,9 @@
 extends layout
 
-block head_extend
-  - var i=0;
-  - var num=0;
+block content
+  #tableajax(style='margin-top: 15px')
+    - var i=0;
+    - var num=0;
       mixin rowsTable(id, name, sirname, email, password, Button)
         tr
           td #{id}
@@ -11,23 +12,20 @@ block head_extend
           td #{email}
           td #{password}
           td
-            button.btn.btn-outline-info(onclick='fillEditField(' + num + ",'" + staffs[num].dataValues.name + "','" + staffs[num].dataValues.sirname + "','" + staffs[num].dataValues.email  + "','" + staffs[num].dataValues.password + "','" + staffs[num].dataValues.id + "')", type='button') Edit
+            button.btn.btn-outline-info(onclick='fillEditField(' + num + ",'" + staffs[num].dataValues.name + "','" + staffs[num].dataValues.sirname + "','" + staffs[num].dataValues.email + "','" + staffs[num].dataValues.password + "','" + staffs[num].dataValues.id + "')", type='button') Edit
             a.ml-2.btn.btn-outline-warning(role="button" href='delete/' + staffs[num++].dataValues.id) Delete
-
-block content
-  .container
-    .row
-      .col-lg-8.col-md-8
-          table.table.table-border.table-hover
-            thead.thread-light
-              tr
-                th Id
-                th Name
-                th Sirname
-                th Email
-                th Password
-                th Actions
-            #tableajax
+    .container
+      .row
+        .col-lg-8.col-md-8
+            table.table.table-border.table-hover
+              thead.thread-light
+                tr
+                  th Id
+                  th Name
+                  th Sirname
+                  th Email
+                  th Password
+                  th Actions
               tbody
                 -for (let i = 0; i < staffs.length; i++)
                   +rowsTable(
@@ -37,24 +35,23 @@ block content
                     staffs[i].dataValues.email,
                     staffs[i].dataValues.password
                   )
-      .col-lg-4.col-md-4
-        h1 Staff
-          //method='POST', action='/'
-          form(method='POST' id='addStaff')
-            input#id.form-control(type='text', placeholder='ID' name='id' readonly)
-            input#name.form-control(type='text', placeholder='Name' name='name')
-            input#sirname.form-control(type='text', placeholder='Sirname' name='sirname')
-            input#email.form-control(type='text', placeholder='Email' name='email')
-            input#password.form-control(type='text', placeholder='Password' name='password')
-            input.btn.btn-success(type='submit', name='addStaff' value='Add')
-            button.btn.btn-info(formaction='edit', name='updateStaff' type="submit") Update
+        .col-lg-4.col-md-4
+          h1 Staff
+            form(method='POST')
+              input#id.form-control(type='text', placeholder='ID' name='id' readonly)
+              input#name.form-control(type='text', placeholder='Name' style='margin-top: 10px' name='name')
+              input#sirname.form-control(type='text', placeholder='Sirname' style='margin-top: 10px' name='sirname')
+              input#email.form-control(type='text', placeholder='Email' style='margin-top: 10px' name='email')
+              input#password.form-control(type='text', placeholder='Password' style='margin-top: 10px' name='password')
+              input#addStaff.btn.btn-success(type='submit', name='addStaff' value='Add')
+              input#updateStaff.btn.btn-info.ml-3(type='submit', name='updateStaff' value='Update')
 
-        script.
-          function fillEditField(i, name, sirname, email, password, id) {
-            console.log('Я тут')
-            document.getElementById('id').value=id;
-            document.getElementById('name').value=name;
-            document.getElementById('sirname').value=sirname;
-            document.getElementById('email').value=email;
-            document.getElementById('password').value=password;
-          }
+  script.
+    function fillEditField(i, name, sirname, email, password, id) {
+      console.log('Я тут')
+      document.getElementById('id').value=id;
+      document.getElementById('name').value=name;
+      document.getElementById('sirname').value=sirname;
+      document.getElementById('email').value=email;
+      document.getElementById('password').value=password;
+    }
